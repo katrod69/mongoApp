@@ -3,20 +3,17 @@ const { Schema, model}= require('mongoose');
 const userSchema = new Schema(
     {
         username:{
-        text:String,
+        type:String,
         unique: true,
         required: true,
-        minLength: 6,
-        maxLength: 20,
-
-        },
+        trim: true,
+    },
+    
         email: {
             type: String,
         required: true,
         unique: true,
-        match: /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/,
-        validate:{
-            validator: (value)
+        match: [/^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/],
         },
         thought: [
             {
@@ -30,11 +27,15 @@ const userSchema = new Schema(
                 ref: 'User'
             }
         ],
+    },
+    {
+        
         toJSON: {
             virtuals: true,
+            getters:true
         },
-        id: false
-    }}
+        id: true,
+    }
 );
 
 userSchema
@@ -43,6 +44,6 @@ userSchema
     return this.friends.length
 });
 
-const User = model('User', userSchema);
+const User = model('user', userSchema);
 
 module.exports = User;

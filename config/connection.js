@@ -1,5 +1,5 @@
 const {connect, connection} = require('mongoose');
 
-connect('mongodb:127.0.0.1:27017/connectionDB');
+connect('mongodb://127.0.0.1:27017/connectionDB');
 
 module.exports = connection;

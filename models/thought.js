@@ -1,5 +1,6 @@
 const { Schema, model, Types} = require('mongoose');
 
+
 const reactSchema = new Schema(
     {
       reactId: {
@@ -7,14 +8,14 @@ const reactSchema = new Schema(
         default: () => new Types.ObjectId()
       },
       reactBody: { 
-    text: String,
-    minLength: 15,
-    maxLength:280,
+    type: String,
+    minlength: 15,
+    maxlength:280,
     required: true,
       },
   
     username:{
-   text: String,
+   type: String,
    required: true,
     },
     createdAt: {
@@ -30,10 +31,10 @@ const thoughtSchema = new Schema(
     {
         text: {
             type: String,
+            required: true,
+            minlength: 15,
+            maxlength:280,
             
-        minLength: 15,
-        maxLength:280,
-        required: true,
         },
         createdAt: {
             type: Date,
@@ -44,13 +45,17 @@ const thoughtSchema = new Schema(
             type:String,
             required: true,
         },
-        reacts:[
-            {
-                type: Schema.Types.ObjectId, ref: 'react'
-            },
-            ],
-},
-);
+        reacts:[reactSchema],
+      },
+      
+      {
+        toJSON: {
+          virtuals: true,
+          getters:true,
+      },
+      id: true,
+    }
+      );
 
 thoughtSchema.virtual('reactionCount')
 .get(function () {
@@ -62,4 +67,3 @@ const Thought = model('thought', thoughtSchema);
 module.exports = Thought;
 
 
-// array of _id values referencing the thought model?
