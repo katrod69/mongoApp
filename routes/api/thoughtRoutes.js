@@ -19,8 +19,8 @@ router.route('/:id')
 .delete(deleteThought);
 
 
-router.route("/:thoughtId/react")
+router.route("/:Thoughtid/reacts")
 .post(createReact);
-router.route('/:thoughtId/react/:reactId')
+router.route('/:Thoughtid/react/:reactId')
 .delete(deleteReact)
 module.exports = router;
