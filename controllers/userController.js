@@ -14,14 +14,14 @@ module.exports = {
   // gets one user
   async getSingleUser(req, res) {
     try {
-      const users = await User.findOne({ _id: req.params.userId }).populate("thought").populate("friends")
-      .select('-__V');
+      const user = await User.findOne({ _id: req.params.Userid }).populate("Thought").populate("Friends")
+      .select('-__v');
 
-      if (!users) {
+      if (!user) {
         return res.status(404).json({ message: 'No user with that ID 😭' });
       }
 
-      res.json(users);
+      res.json(user);
     } catch (err) {
       res.status(500).json(err);
     }
